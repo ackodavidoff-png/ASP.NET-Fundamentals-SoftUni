@@ -32,6 +32,6 @@ namespace WebApplication1.Models
         [Required]
         [ForeignKey(nameof(Seller))]
         public int SellerId { get; set; }
-        public ApplicationUser Seller { get; set; }
+        public virtual ApplicationUser Seller { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Models
 {
@@ -12,8 +13,10 @@ namespace WebApplication1.Models
         public string LastName { get; set; } = null!;
         [Required]
         public string Username { get; set; } = null!;
+        [Required]
         [RegularExpression(@"0\d{9}")]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
         public string? Email { get; set; }
+        public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
     }
 }
