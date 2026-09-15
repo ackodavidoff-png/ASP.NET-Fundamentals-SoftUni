@@ -25,6 +25,8 @@ namespace WebApplication1.Models
         [Required]
         public int HorsePower { get; set; }
         public string? ImageUrl { get; set; }
+        [Required]
+        public State State { get; set; }
         public string? Description { get; set; }
         public DateTime CreatedOn { get; set; }
         [Required]
