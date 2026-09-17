@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Models.Enums
 {
-    public enum FuelType
+    public enum EngineType
     {
         Gasoline = 0,
         Diesel = 1,

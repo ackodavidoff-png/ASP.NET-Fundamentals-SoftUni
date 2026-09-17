@@ -19,7 +19,7 @@ namespace WebApplication1.Models
         [Required]
         public int Mileage { get; set; }
         [Required]
-        public FuelType FuelType { get; set; }
+        public EngineType EngineType { get; set; }
         [Required]
         public TransmissionType TransmissionType { get; set; }
         [Required]

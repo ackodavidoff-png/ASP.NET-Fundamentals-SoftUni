@@ -18,5 +18,6 @@ namespace WebApplication1.Models
         public string PhoneNumber { get; set; } = null!;
         public string? Email { get; set; }
         public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
+        public bool IsAdmin { get; set; }
     }
 }
