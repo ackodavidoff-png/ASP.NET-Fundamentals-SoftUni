@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models.Enums
+﻿namespace WebApplication1.Data.Models.Enums
 {
     public enum TransmissionType
     {
