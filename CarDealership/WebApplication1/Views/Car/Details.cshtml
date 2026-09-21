@@ -1,0 +1,16 @@
+﻿@using WebApplication1.Data.Models
+@model Car
+@{
+    ViewBag.Title = $"{Model.Brand} {Model.Model}";
+}
+<h1>@(Model.Brand) @(Model.Model)</h1>
+<img src="@Model.ImageUrl" alt="No photo" style="width: 1280px; height: 600px; object-fit: cover;" />
+<p>Year produced: @(Model.Year)</p>
+<p>Mileage: @Model.Mileage km</p>
+<p>Engine type: @Model.EngineType</p>
+<p>Transmission type: @Model.TransmissionType</p>
+<p>HP: @Model.HorsePower</p>
+<p>State: @Model.State</p>
+<p>Description: @(Model.Description == null ? "There is no description" : Model.Description)</p>
+<p>Seller: @Model.Seller.FirstName @Model.Seller.LastName</p>
+<h1>@(Model.Price) EUR</h1>

@@ -32,6 +32,8 @@ namespace WebApplication1.Data.Models
         public string? ImageUrl { get; set; }
         [Required]
         public State State { get; set; }
+        [MinLength(CarDescriptionMinLength)]
+        [MaxLength(CarDescriptionMaxLength)]
         public string? Description { get; set; }
         public DateTime CreatedOn { get; set; }
         [Required]

@@ -8,6 +8,8 @@
         public const int CarModelNameMaxLength = 50;
         public const int CarModelNameMinLength = 1;
         public const int CarProductionYearMinValue = 1900;
+        public const int CarDescriptionMinLength = 1;
+        public const int CarDescriptionMaxLength = 5000;
         //Application user
         public const int UserFirstNameMaxLength = 50;
         public const int UserFirstNameMinLength = 1;

@@ -1,5 +1,39 @@
-﻿@{
+﻿@using WebApplication1.Data.Models
+@model IEnumerable<Car>
+@{
     ViewBag.Title = "Cars";
 }
 <h1>Cars</h1>
 <p>Here you can browse some of the cars.</p>
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Car car in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@car.ImageUrl" alt="No photo" style="width: 120px; height: 80px; object-fit: cover;" />
+                    </td>
+                    <th>@car.Brand</th>
+                    <th>@car.Model</th>
+                    <th>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Details" asp-route-id="@car.Id">Details</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no cars in the moment</p>
+}
