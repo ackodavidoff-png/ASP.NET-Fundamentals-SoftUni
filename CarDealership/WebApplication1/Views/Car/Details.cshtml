@@ -5,12 +5,17 @@
 }
 <h1>@(Model.Brand) @(Model.Model)</h1>
 <img src="@Model.ImageUrl" alt="No photo" style="width: 1280px; height: 600px; object-fit: cover;" />
+<h1>@(Model.Price.ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture).Replace(",", " ")) €</h1>
+<h2>Seller: @Model.Seller.FirstName @Model.Seller.LastName</h2>
+<h3>Contact information</h3>
+<p>Phone number: @Model.Seller.PhoneNumber</p>
+<p>@(Model.Seller.Email == null ? null : $"Email: {Model.Seller.Email}")</p>
+<p><a class="nav-link" asp-area="" asp-controller="User" asp-action="Details" asp-route-id="@Model.SellerId">Seller's profile</a></p>
+<h3>Specifications</h3>
 <p>Year produced: @(Model.Year)</p>
-<p>Mileage: @Model.Mileage km</p>
+<p>Mileage: @Model.Mileage.ToString("#,##", System.Globalization.CultureInfo.InvariantCulture).Replace(",", " ") km</p>
 <p>Engine type: @Model.EngineType</p>
 <p>Transmission type: @Model.TransmissionType</p>
 <p>HP: @Model.HorsePower</p>
 <p>State: @Model.State</p>
 <p>Description: @(Model.Description == null ? "There is no description" : Model.Description)</p>
-<p>Seller: @Model.Seller.FirstName @Model.Seller.LastName</p>
-<h1>@(Model.Price) EUR</h1>

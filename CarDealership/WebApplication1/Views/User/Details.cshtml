@@ -1,11 +1,14 @@
 ﻿@using WebApplication1.Data.Models
-@model IEnumerable<Car>
+@model ApplicationUser
 @{
-    ViewBag.Title = "Cars";
+    ViewBag.Title = $"{Model.FirstName} {Model.LastName}";
 }
-<h1>Cars</h1>
-<p>Here you can browse some of the cars.</p>
-@if (Model.Any())
+<h1>@Model.FirstName @Model.LastName (@Model.Username)</h1>
+<h2>Contact information</h2>
+<p>Phone number: @Model.PhoneNumber</p>
+<p>@(Model.Email == null ? null : $"Email: {Model.Email}")</p>
+<h2>Cars</h2>
+@if (Model.Cars.Any())
 {
     <table class="table table-striped">
         <thead>
@@ -18,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Car car in Model)
+            @foreach (Car car in Model.Cars)
             {
                 <tr>
                     <td>
@@ -37,5 +40,5 @@
 }
 else
 {
-    <p>There are no cars in the moment</p>
+    <p>This user has no cars</p>
 }
