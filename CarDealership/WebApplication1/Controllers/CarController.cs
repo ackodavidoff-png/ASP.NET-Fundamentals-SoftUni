@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Data.Models;
+using WebApplication1.ViewModels;
 using static WebApplication1.Common.ApplicationConstraints;
 
 namespace WebApplication1.Controllers
@@ -30,6 +32,63 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
             return View(car);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+            //}
+            //ApplicationUser? user = context.ApplicationUsers.FirstOrDefault(au => au.Id == car.SellerId);
+            IEnumerable<SelectListItem> users = context.ApplicationUsers.Select(au => new SelectListItem()
+            {
+                Value = au.Id.ToString(),
+                Text = au.Username
+            }).ToList();
+            //if (user == null)
+            //{
+            //    return Challenge();
+            //}
+            ViewBag.Users = users;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(CreateCarViewModel carModel)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+            //}
+            //ApplicationUser? user = context.ApplicationUsers.FirstOrDefault(au => au.Id == model.SellerId);
+            //IEnumerable<ApplicationUser> users = context.ApplicationUsers.ToArray();
+            //if (user == null)
+            //{
+            //    return Challenge();
+            //}
+            Car car = new Car()
+            {
+                Brand = carModel.Brand,
+                Model = carModel.Model,
+                Year = carModel.Year,
+                Price = carModel.Price,
+                Mileage = carModel.Mileage,
+                EngineType = carModel.EngineType,
+                TransmissionType = carModel.TransmissionType,
+                HorsePower = carModel.HorsePower,
+                ImageUrl = carModel.ImageUrl,
+                State = carModel.State,
+                Description = carModel.Description,
+                SellerId = carModel.SellerId
+            };
+            //ViewBag.Users = users;
+            context.Cars.Add(car);
+            context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Search()
+        {
+            return View();
         }
     }
 }

@@ -34,6 +34,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Александър/Desktop/ASP.NET-Fundamentals-SoftUni/CarDealership/WebApplication1/Views/Car/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Александър/Desktop/ASP.NET-Fundamentals-SoftUni/CarDealership/WebApplication1/Views/Car/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -44,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Александър/Desktop/ASP.NET-Fundamentals-SoftUni/CarDealership/WebApplication1/Views/Car/NoCars.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXE5vQ2Fycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Александър/Desktop/ASP.NET-Fundamentals-SoftUni/CarDealership/WebApplication1/Views/Car/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyXFNlYXJjaC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Александър/Desktop/ASP.NET-Fundamentals-SoftUni/CarDealership/WebApplication1/Views/Home/About.cshtml]
