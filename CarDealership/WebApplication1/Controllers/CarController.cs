@@ -36,36 +36,17 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest();
-            //}
-            //ApplicationUser? user = context.ApplicationUsers.FirstOrDefault(au => au.Id == car.SellerId);
             IEnumerable<SelectListItem> users = context.ApplicationUsers.Select(au => new SelectListItem()
             {
                 Value = au.Id.ToString(),
                 Text = au.Username
             }).ToList();
-            //if (user == null)
-            //{
-            //    return Challenge();
-            //}
             ViewBag.Users = users;
             return View();
         }
         [HttpPost]
         public IActionResult Create(CreateCarViewModel carModel)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest();
-            //}
-            //ApplicationUser? user = context.ApplicationUsers.FirstOrDefault(au => au.Id == model.SellerId);
-            //IEnumerable<ApplicationUser> users = context.ApplicationUsers.ToArray();
-            //if (user == null)
-            //{
-            //    return Challenge();
-            //}
             Car car = new Car()
             {
                 Brand = carModel.Brand,
@@ -79,16 +60,21 @@ namespace WebApplication1.Controllers
                 ImageUrl = carModel.ImageUrl,
                 State = carModel.State,
                 Description = carModel.Description,
-                SellerId = carModel.SellerId
+                SellerId = carModel.SellerId,
+                CreatedOn = DateTime.Now
             };
-            //ViewBag.Users = users;
             context.Cars.Add(car);
             context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Search()
+        public IActionResult Search(string? searchText)
         {
-            return View();
+            if(searchText == null || searchText == "")
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            IEnumerable<Car> carsFound = context.Cars.Include(c => c.Seller).Where(c => c.Brand.ToLower().Contains(searchText.ToLower())).Take(MaxEntitiesPerPage).ToArray();
+            return View(carsFound);
         }
     }
 }

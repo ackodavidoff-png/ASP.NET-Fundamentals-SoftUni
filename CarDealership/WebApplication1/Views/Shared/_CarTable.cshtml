@@ -1,0 +1,31 @@
+﻿@using WebApplication1.Data.Models
+@model IEnumerable<Car>
+@{
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Car car in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@car.ImageUrl" alt="No photo" style="width: 120px; height: 80px; object-fit: cover;" />
+                </td>
+                <th>@car.Brand</th>
+                <th>@car.Model</th>
+                <th>@(car.Price.ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture).Replace(",", " ")) €</th>
+                <th>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Details" asp-route-id="@car.Id">Details</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
