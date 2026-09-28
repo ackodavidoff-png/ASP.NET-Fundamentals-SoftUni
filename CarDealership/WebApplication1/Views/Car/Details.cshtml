@@ -8,6 +8,7 @@
 <h1>@(Model.Price.ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture).Replace(",", " ")) €</h1>
 <h2>Seller: @Model.Seller.FirstName @Model.Seller.LastName</h2>
 <h3>Contact information</h3>
+<p>Town: @Model.Seller.Town.Name</p>
 <p>Phone number: @Model.Seller.PhoneNumber</p>
 <p>@(Model.Seller.Email == null ? null : $"Email: {Model.Seller.Email}")</p>
 <p><a class="nav-link" asp-area="" asp-controller="User" asp-action="Details" asp-route-id="@Model.SellerId">Seller's profile</a></p>

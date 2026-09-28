@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
@@ -11,9 +12,11 @@ using WebApplication1.Data;
 namespace WebApplication1.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260928072711_AddingDbSetForTowns")]
+    partial class AddingDbSetForTowns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -619,7 +622,7 @@ namespace WebApplication1.Data.Migrations
             modelBuilder.Entity("WebApplication1.Data.Models.ApplicationUser", b =>
                 {
                     b.HasOne("WebApplication1.Data.Models.Town", "Town")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("TownId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -641,11 +644,6 @@ namespace WebApplication1.Data.Migrations
             modelBuilder.Entity("WebApplication1.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("WebApplication1.Data.Models.Town", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

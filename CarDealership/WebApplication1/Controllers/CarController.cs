@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         }
         public IActionResult Details(int id)
         {
-            Car? car = context.Cars.Include(c => c.Seller).FirstOrDefault(c => c.Id == id);
+            Car? car = context.Cars.Include(c => c.Seller).ThenInclude(au => au.Town).FirstOrDefault(c => c.Id == id);
             if (car == null)
             {
                 return NotFound();

@@ -14,12 +14,12 @@ namespace WebApplication1.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<ApplicationUser> users = this.context.ApplicationUsers.Include(au => au.Cars).OrderBy(au => au.FirstName).ThenBy(au => au.LastName).ToArray();
+            IEnumerable<ApplicationUser> users = this.context.ApplicationUsers.Include(au => au.Cars).Include(au => au.Town).OrderBy(au => au.FirstName).ThenBy(au => au.LastName).ToArray();
             return View(users);
         }
         public IActionResult Details(int id)
         {
-            ApplicationUser? user = context.ApplicationUsers.Include(au => au.Cars).FirstOrDefault(au => au.Id == id);
+            ApplicationUser? user = context.ApplicationUsers.Include(au => au.Cars).Include(au => au.Town).FirstOrDefault(au => au.Id == id);
             if (user == null)
             {
                 return NotFound();

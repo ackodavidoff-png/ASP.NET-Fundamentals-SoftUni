@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static WebApplication1.Common.EntityConstraints;
 
 namespace WebApplication1.Data.Models
@@ -26,5 +27,9 @@ namespace WebApplication1.Data.Models
         public string? Email { get; set; }
         public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
         public bool IsAdmin { get; set; }
+        [Required]
+        [ForeignKey(nameof(Town))]
+        public int TownId { get; set; }
+        public virtual Town Town { get; set; } = null!;
     }
 }
