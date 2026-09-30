@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
 using WebApplication1.Data.Models.Enums;
 using static WebApplication1.Common.EntityConstraints;
 
 namespace WebApplication1.ViewModels
 {
-    public class CreateCarViewModel
+    public class EditCarViewModel
     {
+        public int Id { get; set; }
         [Required]
         [StringLength(CarBrandNameMaxLength, MinimumLength = CarBrandNameMinLength)]
         public string Brand { get; set; } = null!;
@@ -36,10 +34,8 @@ namespace WebApplication1.ViewModels
         public State State { get; set; }
         [StringLength(CarDescriptionMaxLength, MinimumLength = CarDescriptionMinLength)]
         public string? Description { get; set; }
-        public DateTime CreatedOn { get; set; }
         [Required]
         //[ForeignKey(nameof(Seller))]
         public int SellerId { get; set; }
-        public IEnumerable<SelectListItem> Users { get; set; } = new List<SelectListItem>();
     }
 }

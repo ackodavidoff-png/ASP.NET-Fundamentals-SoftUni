@@ -10,35 +10,36 @@ namespace WebApplication1.Data.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [MinLength(CarBrandNameMinLength)]
-        [MaxLength(CarBrandNameMaxLength)]
+        [StringLength(CarBrandNameMaxLength, MinimumLength = CarBrandNameMinLength)]
         public string Brand { get; set; } = null!;
         [Required]
-        [MinLength(CarModelNameMinLength)]
-        [MaxLength(CarModelNameMaxLength)]
+        [StringLength(CarModelNameMaxLength, MinimumLength = CarModelNameMinLength)]
         public string Model { get; set; } = null!;
         [Required]
+        [Range(CarProductionYearMinValue, CarProductionYearMaxValue)]
         public int Year { get; set; }
         [Required]
+        [Range(CarPriceMinValue, CarPriceMaxValue)]
         public double Price { get; set; }
         [Required]
+        [Range(CarMileageMinValue, CarMileageMaxValue)]
         public int Mileage { get; set; }
         [Required]
         public EngineType EngineType { get; set; }
         [Required]
         public TransmissionType TransmissionType { get; set; }
         [Required]
+        [Range(CarHorsepowerMinValue, CarHorsepowerMaxValue)]
         public int HorsePower { get; set; }
         public string? ImageUrl { get; set; }
         [Required]
         public State State { get; set; }
-        [MinLength(CarDescriptionMinLength)]
-        [MaxLength(CarDescriptionMaxLength)]
+        [StringLength(CarDescriptionMaxLength, MinimumLength = CarDescriptionMinLength)]
         public string? Description { get; set; }
         public DateTime CreatedOn { get; set; }
         [Required]
         [ForeignKey(nameof(Seller))]
         public int SellerId { get; set; }
-        public virtual ApplicationUser Seller { get; set; }
+        public virtual ApplicationUser Seller { get; set; } = null!;
     }
 }

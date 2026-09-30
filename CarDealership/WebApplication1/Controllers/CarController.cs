@@ -48,6 +48,10 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult Create(CreateCarViewModel carModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(carModel);
+            }
             Car car = new Car()
             {
                 Brand = carModel.Brand,
@@ -80,7 +84,13 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Car? car = context.Cars.FirstOrDefault(c => c.Id == id);
+            IEnumerable<SelectListItem> users = context.ApplicationUsers.Select(au => new SelectListItem()
+            {
+                Value = au.Id.ToString(),
+                Text = au.Username
+            }).ToList();
+            ViewBag.Users = users;
+            Car? car = context.Cars.Include(c => c.Seller).FirstOrDefault(c => c.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -93,14 +103,14 @@ namespace WebApplication1.Controllers
             return View(car);
         }
         [HttpPost]
-        public IActionResult Edit(int id, Car c)
+        public IActionResult Edit(int id, EditCarViewModel carModel)
         {
             //validating the car
-            if (id != c.Id)
+            if (id != carModel.Id)
             {
                 return BadRequest();
             }
-            Car? car = context.Cars.FirstOrDefault(c => c.Id == id);
+            Car? car = context.Cars.Include(c => c.Seller).FirstOrDefault(c => c.Id == id);
             //checking if the car exists
             if (car == null)
             {
@@ -111,18 +121,31 @@ namespace WebApplication1.Controllers
             //{
             //    return Unauthorized();
             //}
+            //checking if the model state is valid
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Users = context.ApplicationUsers.Select(au => new SelectListItem()
+                {
+                    Value = au.Id.ToString(),
+                    Text = au.Username
+                });
+                return View(car);
+            }
             //setting the car new properties
-            car.Brand = c.Brand;
-            car.Model = c.Model;
-            car.Year = c.Year;
-            car.Price = c.Price;
-            car.Mileage = c.Mileage;
-            car.EngineType = c.EngineType;
-            car.TransmissionType = c.TransmissionType;
-            car.HorsePower = c.HorsePower;
-            car.ImageUrl = c.ImageUrl;
-            car.State = c.State;
-            car.Description = c.Description;
+            car.Brand = carModel.Brand;
+            car.Model = carModel.Model;
+            car.Year = carModel.Year;
+            car.Price = carModel.Price;
+            car.Mileage = carModel.Mileage;
+            car.EngineType = carModel.EngineType;
+            car.TransmissionType = carModel.TransmissionType;
+            car.HorsePower = carModel.HorsePower;
+            car.ImageUrl = carModel.ImageUrl;
+            car.State = carModel.State;
+            car.Description = carModel.Description;
+            car.SellerId = carModel.SellerId;
+            car.Seller = context.ApplicationUsers.FirstOrDefault(au => au.Id == carModel.SellerId);
+            //saving the changes in the context
             context.SaveChanges();
             return RedirectToAction(nameof(Details), new Car() { Id = car.Id });
         }
