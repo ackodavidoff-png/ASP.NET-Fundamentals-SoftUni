@@ -50,6 +50,12 @@ namespace WebApplication1.Controllers
         {
             if (!ModelState.IsValid)
             {
+                IEnumerable<SelectListItem> users = context.ApplicationUsers.Select(au => new SelectListItem()
+                {
+                    Value = au.Id.ToString(),
+                    Text = au.Username
+                }).ToList();
+                ViewBag.Users = users;
                 return View(carModel);
             }
             Car car = new Car()
@@ -131,6 +137,10 @@ namespace WebApplication1.Controllers
                 });
                 return View(car);
             }
+            if (car.Seller == null)
+            {
+                return BadRequest();
+            }
             //setting the car new properties
             car.Brand = carModel.Brand;
             car.Model = carModel.Model;
@@ -148,6 +158,28 @@ namespace WebApplication1.Controllers
             //saving the changes in the context
             context.SaveChanges();
             return RedirectToAction(nameof(Details), new Car() { Id = car.Id });
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Car? carToDelete = context.Cars.FirstOrDefault(c => c.Id == id);
+            if (carToDelete == null)
+            {
+                return NotFound();
+            }
+            return View(carToDelete);
+        }
+        [HttpPost]
+        public IActionResult DeleteConfirmation(int id)
+        {
+            Car? carToDelete = context.Cars.FirstOrDefault(c => c.Id == id);
+            if (carToDelete == null)
+            {
+                return NotFound();
+            }
+            context.Cars.Remove(carToDelete);
+            context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

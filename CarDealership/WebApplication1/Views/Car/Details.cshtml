@@ -22,3 +22,4 @@
 <p>Description: @(Model.Description == null ? "There is no description" : Model.Description)</p>
 <p>Added at @Model.CreatedOn.ToString("dd.MM.yyyy")</p>
 <a class="btn btn-secondary" asp-area="" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<a class="btn btn-danger" asp-area="" asp-controller="Car" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
