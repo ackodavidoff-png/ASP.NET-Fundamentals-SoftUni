@@ -26,7 +26,14 @@
             {
                 <tr>
                     <td>
-                        <img src="@car.ImageUrl" alt="No photo" style="width: 120px; height: 80px; object-fit: cover;" />
+                        @if (car.Image == null)
+                        {
+                            <img src="/NoPhoto.png" alt="" style="width: 120px; height: 80px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("Image", "Car", new { id = car.Id })" alt="" style="width: 120px; height: 80px; object-fit: cover;" />
+                        }
                     </td>
                     <th>@car.Brand</th>
                     <th>@car.Model</th>

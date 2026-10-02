@@ -6,7 +6,7 @@
     ViewBag.Title = "Add car";
 }
 <h1>Add car</h1>
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="Brand" class="form-label"></label>
         <input asp-for="Brand" class="form-control" />
@@ -47,10 +47,9 @@
         <input asp-for="HorsePower" class="form-control" type="number" />
         <span asp-validation-for="HorsePower" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    <div class="form-group">
+        <label for="image">Car photo</label>
+        <input type="file" id="image" name="image" accept="image/*" />
     </div>
     <div class="mb-3">
         <label asp-for="State" class="form-label"></label>

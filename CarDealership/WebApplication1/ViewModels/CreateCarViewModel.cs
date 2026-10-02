@@ -31,7 +31,6 @@ namespace WebApplication1.ViewModels
         [Required]
         [Range(CarHorsepowerMinValue, CarHorsepowerMaxValue)]
         public int HorsePower { get; set; }
-        public string? ImageUrl { get; set; }
         [Required]
         public State State { get; set; }
         [StringLength(CarDescriptionMaxLength, MinimumLength = CarDescriptionMinLength)]

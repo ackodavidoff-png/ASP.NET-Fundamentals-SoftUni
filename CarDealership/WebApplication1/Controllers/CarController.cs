@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Data.Models;
 using WebApplication1.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 using static WebApplication1.Common.ApplicationConstraints;
 
 namespace WebApplication1.Controllers
@@ -16,15 +17,13 @@ namespace WebApplication1.Controllers
         {
             this.context = applicationDbContext;
         }
+        //all cars page
         public IActionResult Index()
         {
             IEnumerable<Car> cars = context.Cars.Take(MaxEntitiesPerPage).ToArray();
             return View(cars);
         }
-        public IActionResult NoCars()
-        {
-            return View();
-        }
+        //details page
         public IActionResult Details(int id)
         {
             Car? car = context.Cars.Include(c => c.Seller).ThenInclude(au => au.Town).FirstOrDefault(c => c.Id == id);
@@ -34,6 +33,7 @@ namespace WebApplication1.Controllers
             }
             return View(car);
         }
+        //create Get method
         [HttpGet]
         public IActionResult Create()
         {
@@ -45,8 +45,9 @@ namespace WebApplication1.Controllers
             ViewBag.Users = users;
             return View();
         }
+        //create Post method
         [HttpPost]
-        public IActionResult Create(CreateCarViewModel carModel)
+        public IActionResult Create(CreateCarViewModel carModel, IFormFile? image)
         {
             if (!ModelState.IsValid)
             {
@@ -68,16 +69,22 @@ namespace WebApplication1.Controllers
                 EngineType = carModel.EngineType,
                 TransmissionType = carModel.TransmissionType,
                 HorsePower = carModel.HorsePower,
-                ImageUrl = carModel.ImageUrl,
                 State = carModel.State,
                 Description = carModel.Description,
                 SellerId = carModel.SellerId,
                 CreatedOn = DateTime.Now
             };
+            if (image != null)
+            {
+                using MemoryStream memoryStream = new MemoryStream();
+                image.CopyTo(memoryStream);
+                car.Image = memoryStream.ToArray();
+            }
             context.Cars.Add(car);
             context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        //search controller
         public IActionResult Search(string? searchText)
         {
             if(searchText == null || searchText == "")
@@ -87,6 +94,7 @@ namespace WebApplication1.Controllers
             IEnumerable<Car> carsFound = context.Cars.Include(c => c.Seller).Where(c => c.Brand.ToLower().Contains(searchText.ToLower())).Take(MaxEntitiesPerPage).ToArray();
             return View(carsFound);
         }
+        //edit Get page
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -108,8 +116,9 @@ namespace WebApplication1.Controllers
             //}
             return View(car);
         }
+        //Edit post page
         [HttpPost]
-        public IActionResult Edit(int id, EditCarViewModel carModel)
+        public IActionResult Edit(int id, EditCarViewModel carModel, IFormFile? image)
         {
             //validating the car
             if (id != carModel.Id)
@@ -127,6 +136,7 @@ namespace WebApplication1.Controllers
             //{
             //    return Unauthorized();
             //}
+            
             //checking if the model state is valid
             if (!ModelState.IsValid)
             {
@@ -142,6 +152,12 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
             //setting the car new properties
+            if (image != null)
+            {
+                using MemoryStream memoryStream = new MemoryStream();
+                image.CopyTo(memoryStream);
+                car.Image = memoryStream.ToArray();
+            }
             car.Brand = carModel.Brand;
             car.Model = carModel.Model;
             car.Year = carModel.Year;
@@ -150,7 +166,6 @@ namespace WebApplication1.Controllers
             car.EngineType = carModel.EngineType;
             car.TransmissionType = carModel.TransmissionType;
             car.HorsePower = carModel.HorsePower;
-            car.ImageUrl = carModel.ImageUrl;
             car.State = carModel.State;
             car.Description = carModel.Description;
             car.SellerId = carModel.SellerId;
@@ -159,6 +174,7 @@ namespace WebApplication1.Controllers
             context.SaveChanges();
             return RedirectToAction(nameof(Details), new Car() { Id = car.Id });
         }
+        //delete Get page
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -169,6 +185,7 @@ namespace WebApplication1.Controllers
             }
             return View(carToDelete);
         }
+        //delete confirmation Post method
         [HttpPost]
         public IActionResult DeleteConfirmation(int id)
         {
@@ -180,6 +197,16 @@ namespace WebApplication1.Controllers
             context.Cars.Remove(carToDelete);
             context.SaveChanges();
             return RedirectToAction(nameof(Index));
+        }
+        //car image
+        public IActionResult Image(int id)
+        {
+            Car? car = context.Cars.FirstOrDefault(c => c.Id == id);
+            if (car == null || car.Image == null)
+            {
+                return NotFound();
+            }
+            return File(car.Image, "image/jpeg");
         }
     }
 }

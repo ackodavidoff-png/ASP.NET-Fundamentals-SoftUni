@@ -65,7 +65,6 @@ namespace WebApplication1.Data
                 HorsePower = 250,
                 State = State.Used,
                 Description = "Real kilometres,very well preserved.This car has never been in an accident.",
-                ImageUrl = "https://mobistatic4.focus.bg/mobile/photosorg/791/1/big1/11755978379305791_b1.webp",
                 CreatedOn = new DateTime(2026, 9, 21),
                 SellerId = 1
             },
